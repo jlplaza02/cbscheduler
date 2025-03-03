@@ -1,0 +1,339 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Google Calendar Scheduler</title>
+
+    <!-- Bootstrap 5 CSS for responsive layout -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts for typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap" rel="stylesheet">
+
+    <!-- Custom Premium CSS -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0654a3; /* Soft light gray background */
+            margin: 0;
+            padding: 0;
+            color: #333; /* Darker text for better readability */
+            transition: all 0.3s ease;
+        }
+
+        .dark-mode {
+            background: #181818; /* Darker background for dark mode */
+            color: #f4f6f8; /* Light text for dark mode */
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;  
+            margin: auto;
+            padding: 30px;
+            background: #ffffff;
+            border-radius: 12px; /* Slightly rounded corners */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Softer shadow */
+            position: relative; /* To allow absolute positioning for logo */
+        }
+
+        /* Logo Styling */
+        .logo {
+            width: 70px;
+            height: auto;
+            position: absolute;
+            top: 20px; /* Adjusted to fit within the container */
+            left: 20px; /* Adjusted to fit within the container */
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem; /* Adjusted to fit better */
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #050f27; /* Slightly darker, more refined color */
+        }
+
+        .form-label {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #0c2b74; /* Color consistency with headings */
+        }
+
+        .form-control {
+            background-color: #F9FAFB; /* Soft off-white */
+            border: 1px solid #D1D5DB; /* Light border for input fields */
+            border-radius: 8px; /* More rounded */
+            color: #040313; /* Darker text for input readability */
+            padding: 12px 18px;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            background-color: #fff;
+            border: 2px solid #3B82F6; /* Clear blue focus border */
+            box-shadow: 0 0 8px rgba(59, 130, 246, 0.3); /* Subtle blue glow */
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #FFca09, #FFca09); /* Warm yellow-orange gradient */
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #FFca09, #FFca09); /* Slightly darker hover state */
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(255, 94, 98, 0.2); /* Subtle shadow */
+        }
+
+        .btn-calendar {
+            background-color: #FFca09; /* Aqua-like fresh color */
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .btn-calendar:hover {
+            background-color: #FFca09; /* Slightly darker teal on hover */
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(76, 175, 80, 0.2); /* Soft shadow effect */
+        }
+
+        .btn-template {
+            background-color: #FFca09; /* Golden yellow */
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            border-radius: 25px; /* Slightly rounded */
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-template:hover {
+            background-color: #FFca09; /* Slightly deeper orange on hover */
+            transform: translateY(-2px);
+        }
+
+        footer {    
+            color: #080808;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 1rem;
+            margin-top: 30px;
+        }
+    </style>
+
+<script defer="" data-domain="recruitment-scheduler.tiiny.site" src="https://analytics.tiiny.site/js/plausible.js"></script><script type="text/javascript" src="https://tiiny.host/ad-script.js"></script><script defer="" data-domain="recruitment-scheduler.tiiny.site" src="https://analytics.tiiny.site/js/plausible.js"></script><script type="text/javascript" src="https://tiiny.host/ad-script.js"></script></head>
+
+<body>
+
+    <div class="container">
+        <!-- Logo -->
+        
+
+        <!-- Title -->
+        <h1>Scheduler</h1>
+
+        <!-- Event Form -->
+        <form id="eventForm">
+            <!-- Interview Type Input -->    
+            <div class="mb-4">
+                <label for="interviewType" class="form-label">Interview Type:</label>
+                <select class="form-control" id="interviewType" name="interviewType" required="">
+                    <option value="Callbox Initial Interview">Callbox Initial Interview</option>
+                    <option value="Callbox Pre-screening Interview">Callbox Pre-screening Interview</option>
+                    <option value="Callbox Final Interview">Callbox Final Interview</option>
+                </select>
+            </div>
+
+            <!-- Interviewer's Name -->
+            <div class="mb-4">
+                <label for="interviewerName" class="form-label">Applicant's Name:</label>
+                <input type="text" class="form-control" id="interviewerName" name="interviewerName" placeholder="Enter Applicant's name..." required="">
+            </div>
+
+            <div class="mb-4">
+                <label for="atsLink" class="form-label">ATS Link:</label>
+                <input type="text" class="form-control" id="atsLink" name="atsLink" placeholder="Enter atsLink here..." required="">
+            </div>
+
+            <!-- Position Dropdown (1 to 3) -->
+            <div class="mb-4">
+                <label for="position" class="form-label">Position:</label>
+                <select class="form-control" id="position" name="position">
+                    <option value="Select Position...">Select Position...</option>
+                    <option value="Appointment Setter"> Appointment Setter </option>
+                    <option value="Bilingual">Bilingual</option>
+                    <option value="Call Center Operations/Administrative/Management">Call Center Operations/Administrative/Management </option>
+                    <option value="Client Services Manager (Operations Manager)">Client Services Manager (Operations Manager)</option>
+                    <option value="Client Success Manager (Account Manager)">Client Success Manager (Account Manager) </option>              
+                    <option value="Content Writer">Content Writer</option>
+                    <option value="Data Analyst">Data Analyst </option>
+                    <option value="Data Profiler">Data Profiler </option>                       
+                    <option value="Database Support Manager">Database Support Manager</option>
+                    <option value="Digital Marketing Strategist">Digital Marketing Strategist</option>
+                    <option value="Email Marketer Specialist">Email Marketer Specialist</option>
+                    <option value="Email Researcher">Email Researcher</option>
+                    <option value="Graphic Designer">Graphic Designer</option>
+                    <option value="In-house Data Encoder">In-house Data Encoder</option>
+                    <option value="IT Departmert, Support Staff">IT Departmert, Support Staff</option>
+                    <option value="Management Trainee">Management Trainee</option>
+                    <option value="Marketing Caller">Marketing Caller</option>
+                    <option value="Marketing Non-Caller">Marketing Non-Caller</option>
+                    <option value="On The Job Trainee">On The Job Trainee</option>
+                    <option value="Paid Adwords Specialist">Paid Adwords Specialist</option>
+                    <option value="Production Manager (Campaign Manager)">Production Manager (Campaign Manager)</option>
+                    <option value="Quality Analyst">Quality Analyst</option>
+                    <option value="Recruitment Staff/Specialist">Recruitment Staff/Specialist</option>
+                    <option value="Sales and Marketing">Sales and Marketing</option>
+                    <option value="Sales Development Representative">Sales Development Representative</option>
+                    <option value="Senior Business Development Manager">Senior Business Development Manager</option>
+                    <option value="SEO">SEO</option>
+                    <option value="Social Media Marketer">Social Media Marketer</option>
+                    <option value="Software Developer">Software Developer</option>
+                    <option value="Team Leader">Team Leader</option>
+                    <option value="Telesale (Outbound Appointment Setter)">Telesale (Outbound Appointment Setter)</option>
+                    <option value="Web Developer">Web Developer</option>
+ 
+                </select>
+            </div>
+
+            <!-- Event Date -->
+            <div class="mb-4">
+                <label for="eventDate" class="form-label">Date:</label>
+                <input type="date" class="form-control" id="eventDate" name="eventDate" required="">
+            </div>
+
+            <!-- Event Start Time -->
+            <div class="mb-4">
+                <label for="eventStartTime" class="form-label">Start Time:</label>
+                <input type="time" class="form-control" id="eventStartTime" name="eventStartTime" required="">
+            </div>
+
+            <!-- Event End Time -->
+            <div class="mb-4">
+                <label for="eventEndTime" class="form-label">End Time:</label>
+                <input type="time" class="form-control" id="eventEndTime" name="eventEndTime" required="">
+            </div>
+
+            <!-- Custom Text Reminder -->
+            <div class="mb-4" id="customReminder" style="display: block;">
+                <label for="customText" class="form-label">INTERVIEW REMINDER:</label>
+                <textarea class="form-control" id="customText" name="customText" rows="3" placeholder="Enter custom reminder..."></textarea>
+                <button type="button" class="btn-template" onclick="pasteTemplate()">Set Reminder</button>
+            </div>
+
+            <!-- Event Location -->
+            <div class="mb-4">
+                <label for="eventLocation" class="form-label">Preferred Site:</label>
+                <select class="form-control" id="eventLocation" name="eventLocation" required="">
+                    <option value="ILOILO">ILOILO</option>
+                    <option value="INTERNATIONAL">INTERNATIONAL</option>
+                    <option value="COLOMBIA">COLOMBIA</option>
+                    <option value="DAVAO">DAVAO</option>
+                </select>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn-primary">Confirm Event</button>
+        </form>
+
+        <!-- Google Calendar Link -->
+        <a href="#" id="calendarLink" class="btn-calendar" style="display:none;" target="_blank">Add to Google Calendar</a>
+        
+        <footer>
+            <p>@ Callbox Iloilo Inc.</p>
+        </footer>
+    
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Event Form Submission Logic
+        const eventForm = document.getElementById('eventForm');
+        const atsLink = document.getElementById('atsLink');
+        const calendarLink = document.getElementById('calendarLink');
+        const interviewType = document.getElementById('interviewType');
+        const interviewerName = document.getElementById('interviewerName');
+        const position = document.getElementById('position');
+        const customText = document.getElementById('customText');
+
+        function pasteTemplate() {
+            const atsLinkValue = atsLink.value;
+            const atsLinkHTML = `<a href="${atsLinkValue}" target="_blank">${atsLinkValue}</a>`;
+            
+            const facebookProfileLink = "https://www.facebook.com/dana.ooh123";
+            const facebookProfileHTML = `<a href="${facebookProfileLink}" target="_blank">Facebook Profile</a>`;
+
+            customText.value = `Interview Reminder \n\nPlease join the meeting room at least 5 minutes before your scheduled interview. \n\n A few important notes: \n\nPunctuality matters: Being on time reflects your commitment to joining Callbox. Ensure your internet connection is stable and that all your tools are ready. Please install Google Meet or Zoom beforehand. \n\nCheck your setup: Test your internet connection and resolve any technical issues before the meeting. If you encounter any problems, let us know at least 15 minutes in advance. \n\nRescheduling policy: If you are unable to attend, kindly inform us in advance. You may contact our recruiter through their Facebook account ${facebookProfileHTML}. Please note that we won't accommodate rescheduling for missed interviews unless we receive a notice at least 30 minutes before your schedule or in the case of unforeseen circumstances. Thank you, and we look forward to speaking with you! \n\n Applicant Profile: \n ${interviewerName.value} \n ${atsLinkHTML}`;
+        }
+
+        function resetForm() {
+            eventForm.reset();
+            calendarLink.style.display = 'none';
+            customText.value = '';
+        }
+
+        eventForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const eventTitle = `${interviewType.value} | ${interviewerName.value} | ${position.value}`;
+            const eventDate = document.getElementById('eventDate').value;
+            const eventStartTime = document.getElementById('eventStartTime').value;
+            const eventEndTime = document.getElementById('eventEndTime').value;
+            const eventLocation = document.getElementById('eventLocation').value;
+            const eventInterviewerName = interviewerName.value;
+            const eventPosition = position.value;
+            let eventReminderText = customText.value;
+
+            if (!eventTitle || !eventDate || !eventStartTime || !eventEndTime || !eventLocation || !eventPosition || !eventInterviewerName) {
+                alert("Please fill in all the required fields.");
+                return;
+            }
+
+            const formatDateTime = (date, time) => {
+                const [hours, minutes] = time.split(':');
+                const [year, month, day] = date.split('-');
+                const dateTime = new Date(Date.UTC(year, month - 1, day, hours, minutes));
+                return dateTime.toISOString().replace(/[-:]|\.\d{3}/g, '') + '+08:00'; 
+            };
+
+            const startDateTime = formatDateTime(eventDate, eventStartTime);
+            const endDateTime = formatDateTime(eventDate, eventEndTime);
+
+            const googleCalendarURL = `https://calendar.google.com/calendar/u/0/r/eventedit?text=${encodeURIComponent(eventTitle)}&dates=${startDateTime}/${endDateTime}&details=${encodeURIComponent(eventReminderText)}&location=${encodeURIComponent(eventLocation)}`;
+            calendarLink.href = googleCalendarURL;
+            calendarLink.style.display = 'inline-block';
+
+            alert('Your event has been scheduled. Click the link below to add it to Google Calendar!');
+        });
+
+        calendarLink.addEventListener('click', function() {
+            setTimeout(resetForm, 1000); // Reset form after a short delay
+        });
+    </script>
+
+
+
+
+
+</body></html>
